@@ -4,6 +4,8 @@ node_js:
 install:
   - npm install -g nodeunit eslint
   - npm install
+after_script:
+  - npm run coveralls
 env:
   global:
     secure: Qoth6yx6MgJCxizluyElcM1SUblIL/2WTO5RZVNDfbWCd49Qg6Cm2okUTwoBvJzWzg+1f0DVhMcvTTKtMyulDBhXoC+a6wWDUnmI5g4dORUIdvPh7LuzlZ2fpxc4vl4RFXZ2ny2e1JHFOltfiftP/aB6ZYuL4waTRr1eDGOvrgI=
