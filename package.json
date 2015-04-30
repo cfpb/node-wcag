@@ -1,0 +1,52 @@
+{
+  "name": "wcag",
+  "description": "Test a site for node-wcag compliancy.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/cfpb/node-wcag",
+  "author": {
+    "name": "Chris Contolini",
+    "url": "https://consumerfinance.gov"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cfpb/node-wcag.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cfpb/node-wcag/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/cfpb/node-wcag/blob/master/LICENSE-MIT"
+    }
+  ],
+  "keywords": [
+    "cli",
+    "command line"
+  ],
+  "preferGlobal": true,
+  "bin": {
+    "wcag": "./cli.js"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.8"
+  },
+  "scripts": {
+    "test": "mocha -R test"
+  },
+  "dependencies": {
+    "capitalize": "^0.5.0",
+    "html-entities": "^1.1.2",
+    "indent-string": "^1.2.1",
+    "localtunnel": "^1.5.0",
+    "log-symbols": "^1.0.2",
+    "minimist": "~0.0.8",
+    "request": "^2.55.0",
+    "verbalize": "~0.1.1",
+    "xml2json": "^0.6.1"
+  },
+  "devDependencies": {
+    "verb": "~0.2.0"
+  }
+}
