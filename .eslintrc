@@ -289,15 +289,9 @@ rules:
 
 
   # Rules for STRICT MODE.
-
-  # Controls location of Use Strict Directives.
-  # Ensures all function bodies are strict mode code, while global code is not.
-  # Caveat: when run on pre-concatenated code, global mode may look like
-  # function mode after concatenation.
   strict:
     - 2
-    - global
-
+    - never
 
   # Rules for VARIABLES.
 
@@ -351,7 +345,7 @@ rules:
   # Disallows mixing regular variable and require declarations.
   # This rule may have inaccurate behavior in Node 0.6- and if UMD is used.
   no-mixed-requires:
-    - 1
+    - 0
     - true
 
   # Disallows use of new operator with the require function.
@@ -376,7 +370,7 @@ rules:
   # Set a specific tab width for your code.
   indent:
     - 2
-    - 4
+    - 2
     -
       indentSwitchCase: false
 
@@ -428,7 +422,6 @@ rules:
   key-spacing:
     - 2
     -
-      align: value
       beforeColon: false
       afterColon: true
 
@@ -548,7 +541,7 @@ rules:
   # Requires spaces inside brackets.
   space-in-brackets:
     - 1
-    - always
+    - never
 
   # Requires spaces inside parentheses.
   space-in-parens:

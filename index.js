@@ -1,9 +1,12 @@
 var request = require('request'),
     fromXml = require('xml2json'),
+    protocolify = require('protocolify'),
+    ignoreList = require('./lib/ignore.json'),
     getErrorMsg = require('./lib/getErrorMsg');
 
 function generateReport(xml) {
   var report,
+      results,
       errors = [],
       warnings = [];
 
@@ -15,8 +18,14 @@ function generateReport(xml) {
   xml = xml.replace('\n', '');
 
   report = fromXml.toJson(xml, {object: true, sanitize: false}).resultset;
+  results = report.results.result instanceof Array
+          ? report.results.result
+          : [report.results.result];
 
-  report.results.result.forEach(function(result) {
+  results.forEach(function(result) {
+    if (ignoreList.indexOf(getErrorMsg(result.errorMsg)) > -1) {
+      return;
+    }
     if (result.resultType === 'Error') {
       errors.push({
         line: result.lineNum,
@@ -42,26 +51,32 @@ function generateReport(xml) {
   };
 }
 
+function checkUrl(url) {
+
+}
+
 function validate(opts, cb) {
+  opts = opts || {};
+  cb = cb || function() {};
   if (!opts.uri) {
-    throw new error('No URI provided to test.');
+    return cb(new Error('No URI provided to test.'));
   }
   if (!opts.id) {
-    throw new error('No AChecker API ID provided. Register at http://achecker.ca/register.php to get an ID.');
+    return cb(new Error('No AChecker API ID provided. Register at http://achecker.ca/register.php to get an ID.'));
   }
   opts = {
     uri: 'http://achecker.ca/checkacc.php',
     qs: {
-      uri: opts.uri,
+      uri: protocolify(opts.uri),
       id: opts.id,
       output: 'rest',
       guide: opts.guide || 'WCAG2-AA'
     }
   };
   request(opts, function(err, resp, xml) {
-    if (err) return cb(err);
-    if (xml.indexOf('Invalid web') > -1) {
-      cb('Invalid web service ID. Please get your ID from http://achecker.ca/profile/.')
+    if (err) return cb(new Error(err));
+    if (xml.indexOf('Invalid web service ID') > -1) {
+      return cb(new Error('Invalid web service ID. Please get your ID from http://achecker.ca/profile/.'));
     }
     var report = generateReport(xml);
     return cb(null, report);
