@@ -6,12 +6,16 @@ var wcag = require('./'),
     logSymbols = require('log-symbols'),
     indentString = require('indent-string'),
     localtunnel = require('localtunnel'),
-    url = require('url');
+    url = require('url'),
+    updateNotifier = require('update-notifier');
 
 var uri = argv._[0] || argv.u || argv.uri || argv.url,
     id = argv.id || process.env.ACHECKER_ID,
     guide = argv.guide,
+    pkg = require('./package.json'),
     isLocal;
+
+updateNotifier({pkg: pkg}).notify();
 
 if (!uri) {
   log.error('Please provide a URI, either as a first argument or with `-u`');
