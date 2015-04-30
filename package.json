@@ -1,6 +1,6 @@
 {
   "name": "wcag",
-  "description": "Test a site for node-wcag compliancy.",
+  "description": "Test a site for WCAG or Section 508 compliancy.",
   "version": "0.1.0",
   "homepage": "https://github.com/cfpb/node-wcag",
   "author": {
@@ -16,11 +16,15 @@
   },
   "licenses": [
     {
-      "type": "MIT",
-      "url": "https://github.com/cfpb/node-wcag/blob/master/LICENSE-MIT"
+      "type": "CC0",
+      "url": "https://github.com/cfpb/node-wcag/blob/master/LICENSE"
     }
   ],
   "keywords": [
+    "accessibility",
+    "wcag",
+    "508",
+    "section 508",
     "cli",
     "command line"
   ],
@@ -33,7 +37,8 @@
     "node": ">=0.8"
   },
   "scripts": {
-    "test": "mocha -R test"
+    "test": "eslint index.js && nodeunit test",
+    "coveralls": "jscoverage index.js && WCAG_COVERAGE=1 nodeunit --reporter=lcov test | coveralls"
   },
   "dependencies": {
     "capitalize": "^0.5.0",
@@ -42,11 +47,15 @@
     "localtunnel": "^1.5.0",
     "log-symbols": "^1.0.2",
     "minimist": "~0.0.8",
+    "protocolify": "^1.0.0",
     "request": "^2.55.0",
     "verbalize": "~0.1.1",
     "xml2json": "^0.6.1"
   },
   "devDependencies": {
+    "coveralls": "^2.11.2",
+    "jscoverage": "^0.5.9",
+    "nodeunit": "^0.9.1",
     "verb": "~0.2.0"
   }
 }
