@@ -1,7 +1,7 @@
 {
   "name": "wcag",
   "description": "Test a site for WCAG or Section 508 compliancy.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/cfpb/node-wcag",
   "author": {
     "name": "Chris Contolini",
