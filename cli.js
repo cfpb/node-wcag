@@ -36,7 +36,7 @@ function printLn(string) {
 function printReport(report) {
   printLn('');
   if (!report.errors.length) {
-    printLn(logSymbols.success + '  No errors found!');
+    printLn(logSymbols.success + '  No accessibility errors found!');
   } else {
     printLn(logSymbols.error + '  ' + report.errors.length + ' errors found.\n');
     report.errors.forEach(function(error) {
@@ -51,6 +51,7 @@ function printReport(report) {
     });
     printLn('');
   }
+  if (report.errors.length) process.exit(1);
 }
 
 function validate(uri, cb) {

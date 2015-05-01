@@ -83,5 +83,13 @@ exports.wcag = {
       test.equal(resp.potentialProblems.length, 1);
       test.done();
     });
-  }
+  },
+  'Correctly ignores mundane errors': function(test) {
+    test.expect(1);
+    if (!hasKey(test)) return;
+    wcag({uri: 'http://google.com', id: process.env.ACHECKER_ID}, function(err, resp) {
+      test.equal(resp.errors.length, 2);
+      test.done();
+    });
+  },
 };

@@ -4,7 +4,23 @@ var request = require('request'),
     ignoreList = require('./lib/ignore.json'),
     getErrorMsg = require('./lib/getErrorMsg');
 
+function ignoreIt(result) {
+  if (!result.errorMsg || ignoreList.indexOf(getErrorMsg(result.errorMsg)) > -1) {
+    return true;
+  }
+  return false;
+}
+
+function formatReport(status, errors, warnings) {
+  return {
+    status: status,
+    errors: errors,
+    potentialProblems: warnings
+  };
+}
+
 function generateReport(xml) {
+
   var report,
       results,
       errors = [],
@@ -18,14 +34,18 @@ function generateReport(xml) {
   xml = xml.replace('\n', '');
 
   report = fromXml.toJson(xml, {object: true, sanitize: false}).resultset;
+
+  // If no problems were found, abort.
+  if (!report.results.result) {
+    return formatReport(report.summary.status, errors, warnings);
+  }
+
   results = report.results.result instanceof Array
           ? report.results.result
           : [report.results.result];
 
   results.forEach(function(result) {
-    if (ignoreList.indexOf(getErrorMsg(result.errorMsg)) > -1) {
-      return;
-    }
+    if (ignoreIt(result)) return;
     if (result.resultType === 'Error') {
       errors.push({
         line: result.lineNum,
@@ -44,11 +64,8 @@ function generateReport(xml) {
     }
   });
 
-  return {
-    status: report.summary.status,
-    errors: errors,
-    potentialProblems: warnings
-  };
+  return formatReport(report.summary.status, errors, warnings);
+
 }
 
 function checkUrl(url) {
