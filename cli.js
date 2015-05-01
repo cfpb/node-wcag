@@ -7,6 +7,7 @@ var wcag = require('./'),
     indentString = require('indent-string'),
     localtunnel = require('localtunnel'),
     url = require('url'),
+    protocolify = require('protocolify'),
     updateNotifier = require('update-notifier');
 
 var uri = argv._[0] || argv.u || argv.uri || argv.url,
@@ -27,6 +28,7 @@ if (!id) {
   process.exit(1);
 }
 
+uri = protocolify(uri);
 isLocal = ['localhost', '127.0.0.1', '0.0.0.0'].indexOf(url.parse(uri).hostname) > -1;
 
 function printLn(string) {
