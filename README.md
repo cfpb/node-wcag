@@ -1,6 +1,8 @@
-# node-wcag [![Build Status](https://secure.travis-ci.org/cfpb/node-wcag.png?branch=master)](http://travis-ci.org/cfpb/node-wcag)[![Coverage Status](https://coveralls.io/repos/cfpb/node-wcag/badge.svg)](https://coveralls.io/r/cfpb/node-wcag)
+# node-wcag [![Build Status](https://secure.travis-ci.org/cfpb/node-wcag.png?branch=master)](http://travis-ci.org/cfpb/node-wcag) [![Coverage Status](https://coveralls.io/repos/cfpb/node-wcag/badge.svg)](https://coveralls.io/r/cfpb/node-wcag)
 
-> WCAG and Section 508 accessibility audits from the command line.
+WCAG and Section 508 accessibility audits from the command line.
+
+![WCAG Screenshot](https://raw.githubusercontent.com/cfpb/node-wcag/master/screenshot.png)
 
 ## Installation
 
@@ -54,9 +56,21 @@ $ wcag whitehouse.gov --id=<achecker id> --guide=BITV1
 
 Please read the [Contributing guidelines](CONTRIBUTING.md).
 
-### Running Tests
+### Running node-wcag locally
 
-We are using [nodeunit](https://github.com/caolan/nodeunit) to test. To run tests, first install nodeunit and any dependencies via npm:
+To contribute code, fork this repo, clone it down to your machine and use npm link:
+
+```sh
+$ npm uninstall -g wcag
+$ cd node-wcag
+$ npm link
+$ wcag whatever.com
+```
+
+### Running tests
+
+We are using [nodeunit](https://github.com/caolan/nodeunit) to test.
+To run tests, first install nodeunit and any dependencies via npm:
 
 ```
 npm install
