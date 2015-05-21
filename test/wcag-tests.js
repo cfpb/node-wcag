@@ -88,7 +88,7 @@ exports.wcag = {
     test.expect(1);
     if (!hasKey(test)) return;
     wcag({uri: 'http://google.com', id: process.env.ACHECKER_ID}, function(err, resp) {
-      test.equal(resp.errors.length, 2);
+      test.equal(resp.errors.length, 3);
       test.done();
     });
   },
