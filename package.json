@@ -55,6 +55,7 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
+    "eslint": "^0.21.2",
     "jscoverage": "^0.5.9",
     "nodeunit": "^0.9.1",
     "verb": "~0.2.0"
