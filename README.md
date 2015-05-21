@@ -7,7 +7,7 @@ WCAG and Section 508 accessibility audits from the command line.
 ## Installation
 
 ```sh
-npm install node-wcag --global
+$ npm install wcag --global
 ```
 
 ## CLI usage
