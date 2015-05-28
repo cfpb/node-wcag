@@ -1,0 +1,21 @@
+[
+  "You need a free API ID from AChecker to use this module.",
+  "Register here: http://achecker.ca/register.php to obtain one.",
+  "",
+  "Usage:",
+  "$ <uri to check> --id=<achecker id> --guide=WCAG2_AA",
+  "",
+  "$ wcag whitehouse.gov --id=<achecker id>",
+  "also works against localhost",
+  "$ wcag localhost:8000 --id=<achecker id>",
+  "",
+  "Options",
+  "id, string, your AChecker API ID",
+  "$ wcag whitehouse.gov --id=845cc0a8435cb0a766396a8c56399a43df0c843",
+  "",
+  "guide, string, the accessbility guideline to validate against.",
+  "Choices: 508, WCAG1-A, WCAG1-AA, WCAG1-AAA, WCAG2-A, WCAG2-AA, WCAG2-AAA, BITV1, STANCA",
+  "Default: WCAG2-AA",
+  "$ wcag whitehouse.gov --id=<achecker id> --guide=508",
+  "$ wcag whitehouse.gov --id=<achecker id> --guide=BITV1"
+]
