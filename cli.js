@@ -2,6 +2,7 @@
 
 var wcag = require('./'),
     getVersion = require('./lib/getVersion'),
+    getHelptext = require('./lib/getHelptext'),
     log = require('verbalize'),
     argv = require('minimist')(process.argv.slice(2)),
     logSymbols = require('log-symbols'),
@@ -21,6 +22,11 @@ updateNotifier({pkg: pkg}).notify();
 
 if (process.argv.indexOf('-v') !== -1 || process.argv.indexOf('--version') !== -1) {
   console.log(getVersion());
+  return;
+}
+
+if (process.argv.indexOf('-h') !== -1 || process.argv.indexOf('--help') !== -1) {
+  console.log(getHelptext());
   return;
 }
 
