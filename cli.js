@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var wcag = require('./'),
+    getVersion = require('./lib/getVersion'),
     log = require('verbalize'),
     argv = require('minimist')(process.argv.slice(2)),
     logSymbols = require('log-symbols'),
@@ -17,6 +18,11 @@ var uri = argv._[0] || argv.u || argv.uri || argv.url,
     isLocal;
 
 updateNotifier({pkg: pkg}).notify();
+
+if (process.argv.indexOf('-v') !== -1 || process.argv.indexOf('--version') !== -1) {
+  console.log(getVersion());
+  return;
+}
 
 if (!uri) {
   log.error('Please provide a URI, either as a first argument or with `-u`');
