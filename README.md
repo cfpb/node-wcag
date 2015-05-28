@@ -15,7 +15,7 @@ $ npm install wcag --global
 First, get a free [AChecker API ID](http://achecker.ca/register.php). Then:
 
 ```sh
-$ wcag whitehouse.gov --id=<achecker id>
+$ wcag wikipedia.org --id=<achecker id>
 ```
 
 Also works against localhost:
@@ -33,7 +33,7 @@ Type: `string`
 Your free [AChecker API ID](http://achecker.ca).
 
 ```sh
-$ wcag whitehouse.gov --id=845cc0a8435cb0a766396a8c56399a43df0c843
+$ wcag wikipedia.org --id=845cc0a8435cb0a766396a8c56399a43df0c843
 ```
 
 If an `id` is not passed on the command line,
@@ -48,8 +48,8 @@ Default: `WCAG2-AA`
 The accessbility guideline to validate against.
 
 ```sh
-$ wcag whitehouse.gov --id=<achecker id> --guide=508
-$ wcag whitehouse.gov --id=<achecker id> --guide=BITV1
+$ wcag wikipedia.org --id=<achecker id> --guide=508
+$ wcag wikipedia.org --id=<achecker id> --guide=BITV1
 ```
 
 ## Contributing
