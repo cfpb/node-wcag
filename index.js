@@ -1,6 +1,6 @@
-var request = require('request'),
-    fromXml = require('xml2json'),
+var fromXml = require('xml2json'),
     protocolify = require('protocolify'),
+    getAcheckerResults = require('./lib/getAcheckerResults'),
     ignoreList = require('./lib/ignore.json'),
     getErrorMsg = require('./lib/getErrorMsg');
 
@@ -90,7 +90,7 @@ function validate(opts, cb) {
       guide: opts.guide || 'WCAG2-AA'
     }
   };
-  request(opts, function(err, resp, xml) {
+  getAcheckerResults(opts, function(err, xml) {
     if (err) return cb(new Error(err));
     if (xml.indexOf('Invalid web service ID') > -1) {
       return cb(new Error('Invalid web service ID. Please get your ID from http://achecker.ca/profile/.'));
