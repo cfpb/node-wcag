@@ -3,10 +3,9 @@
 var wcag = require('./'),
     getVersion = require('./lib/getVersion'),
     getHelptext = require('./lib/getHelptext'),
+    printReport = require('./lib/printReport'),
     log = require('verbalize'),
     argv = require('minimist')(process.argv.slice(2)),
-    logSymbols = require('log-symbols'),
-    indentString = require('indent-string'),
     localtunnel = require('localtunnel'),
     url = require('url'),
     protocolify = require('protocolify'),
@@ -43,31 +42,6 @@ if (!id) {
 uri = protocolify(uri);
 isLocal = ['localhost', '127.0.0.1', '0.0.0.0'].indexOf(url.parse(uri).hostname) > -1;
 
-function printLn(string) {
-  return console.log(indentString(string, ' ', 2));
-}
-
-function printReport(report) {
-  printLn('');
-  if (!report.errors.length) {
-    printLn(logSymbols.success + '  No accessibility errors found!');
-  } else {
-    printLn(logSymbols.error + '  ' + report.errors.length + ' errors found.\n');
-    report.errors.forEach(function(error) {
-      printLn(logSymbols.error + '  ' + error.line + ':' + error.column + ' '  + error.message);
-    });
-    printLn('');
-  }
-  if (report.potentialProblems.length) {
-    printLn(logSymbols.warning + '  ' + report.potentialProblems.length + ' potential problems found.\n');
-    report.potentialProblems.forEach(function(warning) {
-      printLn(logSymbols.warning + '  ' + warning.line + ':' + warning.column + ' '  + warning.message);
-    });
-    printLn('');
-  }
-  if (report.errors.length) process.exit(1);
-}
-
 function validate(uri, cb) {
   var opts = {
     uri: uri,
@@ -85,15 +59,15 @@ function validate(uri, cb) {
 }
 
 if (isLocal) {
-  return localtunnel(url.parse(uri).port || 8675, function(err, tunnel) {
+  localtunnel(url.parse(uri).port || 8675, function(err, tunnel) {
     if (err) {
       log.error(err);
       process.exit(1);
     }
     validate(tunnel.url, function() {
       tunnel.close();
-    })
+    });
   });
+} else {
+  validate(uri);
 }
-
-validate(uri);
