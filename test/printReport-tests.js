@@ -34,5 +34,14 @@ exports.printReport = {
     }
     test.ok(found);
     test.done();
+  },
+  'Should not print any errors without locations': function (test) {
+    var i = log.length,
+        found = 0;
+    while (i--) {
+      if (log[i].indexOf('Occurs at .') > -1) found++;
+    }
+    test.equal(found, 0);
+    test.done();
   }
 };
