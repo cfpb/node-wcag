@@ -25,6 +25,7 @@ var wcag = process.env.WCAG_COVERAGE ? require('../index-cov.js') : require('../
 // The HTML for this fixture was copied/pasted from whitehouse.gov.
 var testURI = 'http://contolini.github.io/node-wcag/test/fixtures/whitehouse.html';
 var ignoreTestURI = 'http://contolini.github.io/node-wcag/test/fixtures/ignore.html';
+var invalidURI = 'thisIsAnInvalidURL';
 
 function hasKey(test) {
   if (!process.env.ACHECKER_ID) {
@@ -47,6 +48,10 @@ exports.wcag = {
   },
   'Bad arguments': function(test) {
     test.throws(wcag({uri: testURI}));
+    test.done();
+  },
+  'Invalid URL': function(test) {
+    test.throws(wcag({uri: invalidURI}));
     test.done();
   },
   'Bad API key': function(test) {
