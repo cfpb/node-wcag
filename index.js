@@ -68,10 +68,6 @@ function generateReport(xml) {
 
 }
 
-function checkUrl(url) {
-
-}
-
 function validate(opts, cb) {
   opts = opts || {};
   cb = cb || function() {};
