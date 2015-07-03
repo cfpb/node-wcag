@@ -1,5 +1,6 @@
 var fromXml = require('xml2json'),
     protocolify = require('protocolify'),
+    validUrl = require('valid-url'),
     getAcheckerResults = require('./lib/getAcheckerResults'),
     ignoreList = require('./lib/ignore.json'),
     getErrorMsg = require('./lib/getErrorMsg');
@@ -73,6 +74,9 @@ function validate(opts, cb) {
   cb = cb || function() {};
   if (!opts.uri) {
     return cb(new Error('No URI provided to test.'));
+  }
+  if (opts.uri && !validUrl.isWebUri(opts.uri)) {
+    return cb(new Error('You supplied an invalid URL.'), null);
   }
   if (!opts.id) {
     return cb(new Error('No AChecker API ID provided. Register at http://achecker.ca/register.php to get an ID.'));

@@ -58,6 +58,7 @@
     "minimist": "~0.0.8",
     "protocolify": "^1.0.0",
     "update-notifier": "^0.4.0",
+    "valid-url": "^1.0.9",
     "verbalize": "~0.1.1",
     "xml2json": "^0.6.1"
   },
