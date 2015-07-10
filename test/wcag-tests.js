@@ -1,5 +1,3 @@
-'use strict';
-
 var wcag = process.env.WCAG_COVERAGE ? require('../index-cov.js') : require('../index.js');
 
 /*
