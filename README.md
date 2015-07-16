@@ -78,7 +78,7 @@ wcag(options, function (error, data) {
 });
 ```
 
-The example will return [this output]('data/output.json')
+The example will return [this output](data/output.json)
 
 ### Options
 
