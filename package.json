@@ -21,12 +21,7 @@
   "bugs": {
     "url": "https://github.com/cfpb/node-wcag/issues"
   },
-  "licenses": [
-    {
-      "type": "CC0",
-      "url": "https://github.com/cfpb/node-wcag/blob/master/LICENSE"
-    }
-  ],
+  "license": "CC0-1.0",
   "keywords": [
     "accessibility",
     "wcag",
