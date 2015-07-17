@@ -1,7 +1,7 @@
 {
   "name": "wcag",
   "description": "Test a site for WCAG or Section 508 compliancy.",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "homepage": "https://github.com/cfpb/node-wcag",
   "author": {
     "name": "Chris Contolini",
@@ -21,12 +21,7 @@
   "bugs": {
     "url": "https://github.com/cfpb/node-wcag/issues"
   },
-  "licenses": [
-    {
-      "type": "CC0",
-      "url": "https://github.com/cfpb/node-wcag/blob/master/LICENSE"
-    }
-  ],
+  "license": "CC0-1.0",
   "keywords": [
     "accessibility",
     "wcag",
