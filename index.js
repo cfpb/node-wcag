@@ -25,7 +25,8 @@ function generateReport(xml, callback) {
   var report,
       results,
       errors = [],
-      warnings = [];
+      warnings = [],
+      failedParsing = false;
 
   // Strip code tags while preserving any text between them.
   xml = xml.replace(/&lt;code&gt;|&lt;\/code&gt;/ig, '');
@@ -37,9 +38,9 @@ function generateReport(xml, callback) {
 
   parseString(xml, {explicitArray: false}, function(err, data) {
     if (err) {
-      return callback(err, null);
+      failedParsing = err;
     } else {
-      report = data.resultset
+      report = data.resultset;
 
       if (!report.results.result) {
         return callback(null, formatReport(report.summary.status, errors, warnings));
@@ -68,9 +69,10 @@ function generateReport(xml, callback) {
           });
         }
       });
-
-      return callback(formatReport(report.summary.status, errors, warnings));
     }
+    return failedParsing
+      ? callback(failedParsing, null)
+      : callback(null, formatReport(report.summary.status, errors, warnings));
   });
 }
 
@@ -100,12 +102,10 @@ function validate(opts, cb) {
     if (xml.indexOf('Invalid web service ID') > -1) {
       return cb(new Error('Invalid web service ID. Please get your ID from http://achecker.ca/profile/.'));
     }
-    generateReport(xml, function(error, report){
-      if (error) {
-        return cb(error, null);
-      } else {
-        return cb(null, report);
-      }
+    generateReport(xml, function(error, report) {
+      return error
+        ? cb(error, null)
+        : cb(null, report);
     });
 
   });
