@@ -16,11 +16,6 @@ rules:
 
   # Rules for flagging POSSIBLE ERRORS.
 
-  # Consistent use of trailing commas in object and array literals.
-  # This rule is needed for IE8- support.
-  comma-dangle:
-    - never
-
   # Disallows assignment in conditional expressions.
   no-cond-assign:
     - 2
@@ -45,7 +40,7 @@ rules:
   no-empty: 2
 
   # Disallows use of empty character classes in regular expressions.
-  no-empty-class: 2
+  no-empty-character-class: 2
 
   # Disallows assigning to the exception in a catch block.
   no-ex-assign: 2
@@ -84,7 +79,7 @@ rules:
 
   # Disallows reserved words being used as object literal keys.
   # Unneeded in ECMAScript 5+ environments.
-  no-reserved-keys: 2
+  quote-props: 2
 
   # Disallows sparse arrays.
   # Array values should be explicitly defined.
@@ -372,7 +367,7 @@ rules:
     - 2
     - 2
     -
-      indentSwitchCase: false
+      VariableDeclarator: 2
 
   # Enforce one true brace style.
   brace-style:
@@ -480,7 +475,7 @@ rules:
   no-underscore-dangle: 0
 
   # Disallows wrapping of non-IIFE statements in parens.
-  no-wrap-func: 2
+  spaced-comment: 2
 
   # Disallows multiple var statements per function.
   one-var: 0
@@ -562,7 +557,7 @@ rules:
       nonwords: false
 
   # Requires a space immediately following the // in a line comment.
-  spaced-line-comment:
+  spaced-comment:
     - 2
     - always
 
