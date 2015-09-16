@@ -1,4 +1,4 @@
-var fromXml = require('xml2json'),
+var parseString = require('xml2js').parseString,
     protocolify = require('protocolify'),
     validUrl = require('valid-url'),
     getAcheckerResults = require('./lib/getAcheckerResults'),
@@ -20,12 +20,13 @@ function formatReport(status, errors, warnings) {
   };
 }
 
-function generateReport(xml) {
+function generateReport(xml, callback) {
 
   var report,
       results,
       errors = [],
-      warnings = [];
+      warnings = [],
+      failedParsing = false;
 
   // Strip code tags while preserving any text between them.
   xml = xml.replace(/&lt;code&gt;|&lt;\/code&gt;/ig, '');
@@ -34,39 +35,45 @@ function generateReport(xml) {
   // Remove newlines.
   xml = xml.replace('\n', '');
 
-  report = fromXml.toJson(xml, {object: true, sanitize: false}).resultset;
 
-  // If no problems were found, abort.
-  if (!report.results.result) {
-    return formatReport(report.summary.status, errors, warnings);
-  }
+  parseString(xml, {explicitArray: false}, function(err, data) {
+    if (err) {
+      failedParsing = err;
+    } else {
+      report = data.resultset;
 
-  results = report.results.result instanceof Array
-          ? report.results.result
-          : [report.results.result];
+      if (!report.results.result) {
+        return callback(null, formatReport(report.summary.status, errors, warnings));
+      }
 
-  results.forEach(function(result) {
-    if (ignoreIt(result)) return;
-    if (result.resultType === 'Error') {
-      errors.push({
-        line: result.lineNum,
-        column: result.columnNum,
-        message: getErrorMsg(result.errorMsg),
-        solution: result.repair
+      results = report.results.result instanceof Array
+        ? report.results.result
+        : [report.results.result];
+
+      results.forEach(function(result) {
+        if (ignoreIt(result)) return;
+        if (result.resultType === 'Error') {
+          errors.push({
+            line: result.lineNum,
+            column: result.columnNum,
+            message: getErrorMsg(result.errorMsg),
+            solution: result.repair
+          });
+        }
+        if (result.resultType === 'Potential Problem') {
+          warnings.push({
+            line: result.lineNum,
+            column: result.columnNum,
+            message: getErrorMsg(result.errorMsg),
+            source: result.errorSourceCode
+          });
+        }
       });
     }
-    if (result.resultType === 'Potential Problem') {
-      warnings.push({
-        line: result.lineNum,
-        column: result.columnNum,
-        message: getErrorMsg(result.errorMsg),
-        source: result.errorSourceCode
-      });
-    }
+    return failedParsing
+      ? callback(failedParsing, null)
+      : callback(null, formatReport(report.summary.status, errors, warnings));
   });
-
-  return formatReport(report.summary.status, errors, warnings);
-
 }
 
 function validate(opts, cb) {
@@ -95,8 +102,12 @@ function validate(opts, cb) {
     if (xml.indexOf('Invalid web service ID') > -1) {
       return cb(new Error('Invalid web service ID. Please get your ID from http://achecker.ca/profile/.'));
     }
-    var report = generateReport(xml);
-    return cb(null, report);
+    generateReport(xml, function(error, report) {
+      return error
+        ? cb(error, null)
+        : cb(null, report);
+    });
+
   });
 }
 
