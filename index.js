@@ -1,12 +1,15 @@
-var parseString = require('xml2js').parseString,
-    protocolify = require('protocolify'),
-    validUrl = require('valid-url'),
-    getAcheckerResults = require('./lib/getAcheckerResults'),
-    ignoreList = require('./lib/ignore.json'),
-    getErrorMsg = require('./lib/getErrorMsg');
+'use strict';
+
+var parseString = require('xml2js').parseString;
+var protocolify = require('protocolify');
+var validUrl = require('valid-url');
+var getAcheckerResults = require('./lib/getAcheckerResults');
+var ignoreList = require('./lib/ignore.json');
+var getErrorMsg = require('./lib/getErrorMsg');
 
 function ignoreIt(result) {
-  if (!result.errorMsg || ignoreList.indexOf(getErrorMsg(result.errorMsg)) > -1) {
+  if (!result.errorMsg ||
+      ignoreList.indexOf(getErrorMsg(result.errorMsg)) > -1) {
     return true;
   }
   return false;
@@ -43,12 +46,13 @@ function generateReport(xml, callback) {
       report = data.resultset;
 
       if (!report.results.result) {
-        return callback(null, formatReport(report.summary.status, errors, warnings));
+        return callback(null,
+                        formatReport(report.summary.status, errors, warnings));
       }
 
-      results = report.results.result instanceof Array
-        ? report.results.result
-        : [report.results.result];
+      results = report.results.result instanceof Array ?
+        report.results.result :
+        [report.results.result];
 
       results.forEach(function(result) {
         if (ignoreIt(result)) return;
@@ -70,15 +74,16 @@ function generateReport(xml, callback) {
         }
       });
     }
-    return failedParsing
-      ? callback(failedParsing, null)
-      : callback(null, formatReport(report.summary.status, errors, warnings));
+    return failedParsing ?
+      callback(failedParsing, null) :
+      callback(null, formatReport(report.summary.status, errors, warnings));
   });
 }
 
 function validate(opts, cb) {
   opts = opts || {};
   cb = cb || function() {};
+  var msg;
   if (!opts.uri) {
     return cb(new Error('No URI provided to test.'));
   }
@@ -86,7 +91,9 @@ function validate(opts, cb) {
     return cb(new Error('You supplied an invalid URL.'), null);
   }
   if (!opts.id) {
-    return cb(new Error('No AChecker API ID provided. Register at http://achecker.ca/register.php to get an ID.'));
+    msg = 'No AChecker API ID provided. ' +
+          'Register at http://achecker.ca/register.php to get an ID.';
+    return cb(new Error(msg));
   }
   opts = {
     uri: 'http://achecker.ca/checkacc.php',
@@ -100,12 +107,14 @@ function validate(opts, cb) {
   getAcheckerResults(opts, function(err, xml) {
     if (err) return cb(new Error(err));
     if (xml.indexOf('Invalid web service ID') > -1) {
-      return cb(new Error('Invalid web service ID. Please get your ID from http://achecker.ca/profile/.'));
+      msg = 'Invalid web service ID. ' +
+            'Please get your ID from http://achecker.ca/profile/.';
+      return cb(new Error(msg));
     }
     generateReport(xml, function(error, report) {
-      return error
-        ? cb(error, null)
-        : cb(null, report);
+      return error ?
+        cb(error, null) :
+        cb(null, report);
     });
 
   });

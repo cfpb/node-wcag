@@ -1,13 +1,53 @@
+# Enable ecmascript 6 features.
 ecmaFeatures:
-  ecmascript: 6
+  arrowFunctions: false
+  binaryLiterals: false
+  blockBindings: false
+  classes: false
+  defaultParams: false
+  destructuring: false
+  forOf: true
+  generators: false
+  modules: false
+  objectLiteralComputedProperties: false
+  objectLiteralDuplicateProperties: false
+  objectLiteralShorthandMethods: false
+  objectLiteralShorthandProperties: false
+  octalLiterals: false
+  regexUFlag: false
+  regexYFlag: false
+  restParams: true
+  spread: false
+  superInFunctions: false
+  templateStrings: false
+  unicodeCodePointEscapes: false
+  globalReturn: false
+  jsx: true
+  experimentalObjectRestSpread: false
+
+parser: espree
 
 env:
   browser: true
   node: true
+  worker: false
+  amd: true
+  mocha: false
+  jasmine: false
+  phantomjs: false
+  qunit: false
+  jquery: false
+  prototypejs: false
+  shelljs: false
+  meteor: false
+  mongo: false
+  applescript: false
+  serviceworker: true
+  embertest: false
+  es6: false
 
 globals:
-  jQuery: true
-  $: true
+  $: false
 
 # Linting rules for ESLint.
 # 0's ignore a rule, 1's produce a warning, and 2's throw an error.
@@ -19,6 +59,7 @@ rules:
   # Consistent use of trailing commas in object and array literals.
   # This rule is needed for IE8- support.
   comma-dangle:
+    - 2
     - never
 
   # Disallows assignment in conditional expressions.
@@ -38,14 +79,20 @@ rules:
   # Enforces flagging use of the debugger.
   no-debugger: 2
 
+  # Disallow duplicate arguments in functions.
+  no-dupe-args: 2
+
   # Disallows duplicate keys when creating object literals.
   no-dupe-keys: 2
 
+  # Disallow a duplicate case label.
+  no-duplicate-case: 2
+
+  # Disallow the use of empty character classes in regular expressions.
+  no-empty-character-class: 2
+
   # Disallows empty statements.
   no-empty: 2
-
-  # Disallows use of empty character classes in regular expressions.
-  no-empty-class: 2
 
   # Disallows assigning to the exception in a catch block.
   no-ex-assign: 2
@@ -54,7 +101,9 @@ rules:
   no-extra-boolean-cast: 2
 
   # Disallows unnecessary parentheses.
-  no-extra-parens: 1
+  no-extra-parens:
+    - 1
+    - all
 
   # Disallows unnecessary semicolons.
   no-extra-semi: 2
@@ -82,10 +131,6 @@ rules:
   # Disallows multiple spaces in a regular expression literal.
   no-regex-spaces: 2
 
-  # Disallows reserved words being used as object literal keys.
-  # Unneeded in ECMAScript 5+ environments.
-  no-reserved-keys: 2
-
   # Disallows sparse arrays.
   # Array values should be explicitly defined.
   no-sparse-arrays: 2
@@ -109,8 +154,17 @@ rules:
   # Enforces that the results of typeof are compared against a valid string.
   valid-typeof: 2
 
+  # Avoid code that looks like two expressions but is actually one.
+  no-unexpected-multiline: 2
+
 
   # Rules for encouraging BEST PRACTICES.
+
+  # Enforces getter/setter pairs in objects.
+  accessor-pairs:
+    - 1
+    -
+      getWithoutSet: false
 
   # Enforces treating var statements as if they were block scoped.
   block-scoped-var: 1
@@ -118,7 +172,7 @@ rules:
   # Enforces specific maximum cyclomatic complexity.
   complexity:
     - 1
-    - 3
+    - 4
 
   # Enforces return statements to either always or never specify values.
   consistent-return: 2
@@ -138,6 +192,11 @@ rules:
     -
       allowKeywords: false
       allowPattern: ''
+
+  # Enforces consistent newlines before or after dots.
+  dot-location:
+    - 2
+    - property
 
   # Enforces use of === and !== over == and !=.
   eqeqeq:
@@ -180,8 +239,19 @@ rules:
   # Disallows use of leading or trailing decimal points in numeric literals.
   no-floating-decimal: 2
 
+  # Disallow the type conversions with shorter notations.
+  no-implicit-coercion:
+    - 1
+    -
+      boolean: true
+      number: true
+      string: true
+
   # Disallows use of eval()-like methods.
   no-implied-eval: 2
+
+  # Disallow this keyword outside of classes or class-like objects.
+  no-invalid-this: 0
 
   # Disallows usage of __iterator__ property.
   no-iterator: 2
@@ -210,20 +280,26 @@ rules:
   # Disallows reassignments of native objects.
   no-native-reassign: 2
 
-  # Disallows use of new operator when not part of the assignment or comparison.
-  no-new: 1
-
   # Disallows use of new operator for Function object.
   no-new-func: 2
 
   # Disallows creating new instances of String, Number, and Boolean.
   no-new-wrappers: 2
 
-  # Disallows use of octal literals.
-  no-octal: 2
+  # Disallows use of new operator when not part of the assignment or comparison.
+  no-new: 1
 
   # Disallows use of octal escape sequences in string literals, e.g. "\251".
   no-octal-escape: 2
+
+  # Disallows use of octal literals.
+  no-octal: 2
+
+  # Disallow reassignment of function parameters.
+  no-param-reassign:
+    - 0
+    -
+      props: false
 
   # Disallows use of process.env.
   # Only applicable to Node.js.
@@ -236,7 +312,9 @@ rules:
   no-redeclare: 2
 
   # Disallows use of assignment in return statement.
-  no-return-assign: 2
+  no-return-assign:
+    - 2
+    - 'except-parens'
 
   # Disallows use of javascript: urls.
   no-script-url: 2
@@ -253,6 +331,9 @@ rules:
   # Disallows usage of expressions in statement position.
   no-unused-expressions: 2
 
+  # Disallow unnecessary .call() and .apply().
+  no-useless-call: 2
+
   # Disallows use of void operator.
   no-void: 2
 
@@ -261,6 +342,7 @@ rules:
     - 1
     -
       terms:
+        - '@todo'
         - todo
         - fixme
         - xxx
@@ -286,12 +368,19 @@ rules:
     - never
     -
       exceptRange: true
+      onlyEquality: false
 
 
   # Rules for STRICT MODE.
+
+  # Controls location of Use Strict Directives.
+  # Ensures all function bodies are strict mode code, while global code is not.
+  # Caveat: when run on pre-concatenated code, global mode may look like
+  # function mode after concatenation.
   strict:
     - 2
-    - never
+    - global
+
 
   # Rules for VARIABLES.
 
@@ -306,17 +395,17 @@ rules:
   # Disallows labels that share a name with a variable.
   no-label-var: 2
 
-  # Disallows declaring variables already declared in the outer scope.
-  no-shadow: 1
-
   # Disallows shadowing of names such as arguments.
   no-shadow-restricted-names: 2
 
-  # Disallows use of undeclared vars unless mentioned in a /*global */ block.
-  no-undef: 2
+  # Disallows declaring variables already declared in the outer scope.
+  no-shadow: 1
 
   # Disallows use of undefined when initializing variables.
   no-undef-init: 2
+
+  # Disallows use of undeclared vars unless mentioned in a /*global */ block.
+  no-undef: 2
 
   # Disallows use of undefined variable.
   no-undefined: 2
@@ -336,6 +425,15 @@ rules:
 
   # Rules for NODE.JS.
 
+  # Enforce return after a callback.
+  # callback, cb, and next are possible callback function names.
+  callback-return:
+    - 2
+    -
+      - callback
+      - cb
+      - next
+
   # Enforce error handling in callbacks.
   # Matches any string that contains err or Err (err, error, anyError, an_err).
   handle-callback-err:
@@ -345,7 +443,7 @@ rules:
   # Disallows mixing regular variable and require declarations.
   # This rule may have inaccurate behavior in Node 0.6- and if UMD is used.
   no-mixed-requires:
-    - 0
+    - 1
     - true
 
   # Disallows use of new operator with the require function.
@@ -367,12 +465,10 @@ rules:
   # Rules for STYLISTIC ISSUES.
   # These rules are purely matters of style and are quite subjective.
 
-  # Set a specific tab width for your code.
-  indent:
-    - 2
-    - 2
-    -
-      indentSwitchCase: false
+  # Enforce spacing inside array brackets.
+  array-bracket-spacing:
+    - 1
+    - never
 
   # Enforce one true brace style.
   brace-style:
@@ -399,6 +495,11 @@ rules:
     - 2
     - last
 
+  # Require or disallow padding inside computed properties.
+  computed-property-spacing:
+    - 1
+    - never
+
   # Enforce consistent naming when capturing the current execution context.
   # This should be turned on if ESLint supports a regex for the
   # matching value in the future for the ^[_]?self regex.
@@ -410,7 +511,7 @@ rules:
   eol-last: 2
 
   # Enforce function expressions not having a name.
-  func-names: 1
+  func-names: 0
 
   # Enforce use of function declarations or expressions
   # because of variable hoisting behavior.
@@ -418,12 +519,49 @@ rules:
     - 1
     - declaration
 
-  # Enforce spacing between keys and values in object literal properties.
-  key-spacing:
+  # Enforces min/max identifier lengths (variable names, property names etc.).
+  id-length:
+    - 0
+    -
+      min: 3
+      max: 10
+      exceptions:
+        - i
+
+  # Set a specific tab width for your code.
+  indent:
+    - 2
     - 2
     -
+      SwitchCase: 1
+      VariableDeclarator:
+        var: 2
+        let: 2
+        const: 3
+
+  # Enforce spacing between keys and values in object literal properties.
+  key-spacing:
+    - 0
+    -
+      align: value
       beforeColon: false
       afterColon: true
+
+  # Enforces empty lines around comments.
+  lines-around-comment:
+    - 1
+    -
+      beforeBlockComment: true
+      afterBlockComment: false
+      beforeLineComment: false
+      afterLineComment: false
+      allowBlockStart: false
+      allowBlockEnd: false
+
+  # Disallow mixed 'LF' and 'CRLF' as linebreaks.
+  linebreak-style:
+    - 2
+    - unix
 
   # Specify the maximum depth callbacks can be nested.
   max-nested-callbacks:
@@ -442,8 +580,16 @@ rules:
   # Disallows omission of parentheses when invoking a constructor with no arguments.
   new-parens: 2
 
+  # Disallow an empty newline after var statement.
+  newline-after-var:
+    - 0
+    - always
+
   # Disallows use of the Array constructor.
   no-array-constructor: 2
+
+  # Disallow use of the continue statement.
+  no-continue: 1
 
   # Disallows inline after code.
   no-inline-comments: 1
@@ -474,21 +620,38 @@ rules:
   no-ternary: 0
 
   # Disallows trailing whitespace at the end of lines.
-  no-trailing-spaces: 2
+  no-trailing-spaces:
+    - 2
+    - skipBlankLines: false
 
   # Disallows dangling underscores in identifiers.
   no-underscore-dangle: 0
 
-  # Disallows wrapping of non-IIFE statements in parens.
-  no-wrap-func: 2
+  # Disallow the use of Boolean literals in conditional expressions.
+  no-unneeded-ternary: 0
+
+  # Require or disallow padding inside curly braces.
+  object-curly-spacing:
+    - 1
+    - never
+    -
+      objectsInObjects: false
+      arraysInObjects: false
 
   # Disallows multiple var statements per function.
-  one-var: 0
+  one-var:
+    - 0
+    - always
 
   # Requires assignment operator shorthand or prohibit it entirely.
   operator-assignment:
     - 2
     - always
+
+  # Enforce operators to be placed before or after line breaks.
+  operator-linebreak:
+    - 1
+    - after
 
   # Enforces padding within blocks.
   padded-blocks:
@@ -506,10 +669,12 @@ rules:
     - single
     - avoid-escape
 
-  # Requires or disallows use of semicolons instead of ASI.
-  semi:
-    - 2
-    - always
+  # Require identifiers to match the provided regular expression.
+  id-match:
+    - 0
+    - '^[a-z]+([A-Z][a-z]+)*$'
+    -
+      properties: false
 
   # Disallows space before semicolon.
   semi-spacing:
@@ -517,6 +682,11 @@ rules:
     -
       before: false
       after: true
+
+  # Requires or disallows use of semicolons instead of ASI.
+  semi:
+    - 2
+    - always
 
   # Enforces sorting variables within the same declaration block.
   sort-vars: 0
@@ -538,18 +708,16 @@ rules:
       anonymous: never
       named: never
 
-  # Requires spaces inside brackets.
-  space-in-brackets:
-    - 1
-    - never
-
   # Requires spaces inside parentheses.
   space-in-parens:
     - 1
     - never
 
   # Requires spaces around operators.
-  space-infix-ops: 2
+  space-infix-ops:
+    - 2
+    -
+      int32Hint: false
 
   # Requires a space after return, throw, and case.
   space-return-throw-case: 2
@@ -561,10 +729,16 @@ rules:
       words: true
       nonwords: false
 
-  # Requires a space immediately following the // in a line comment.
-  spaced-line-comment:
+  # Require or disallow a space immediately following // or /* in a comment.
+  spaced-comment:
     - 2
     - always
+    -
+      exceptions:
+        - '-'
+        - +
+      markers:
+        - /
 
   # Requires regex literals to be wrapped in parentheses.
   wrap-regex: 2
@@ -573,14 +747,57 @@ rules:
   # Rules for ECMASCRIPT 6.
   # These rules are only relevant to ES6 environments.
 
-  # Requires using let or const instead of var.
-  # This should be turned on when browser support is better.
-  no-var: 0
+  # Require parens in arrow function arguments.
+  arrow-parens: 2
+
+  # Require space before/after arrow function's arrow.
+  arrow-spacing:
+    - 2
+    -
+      before: true
+      after: true
+
+  # Verify super() callings in constructors.
+  constructor-super: 2
 
   # Enforces the position of the * in generator functions.
   generator-star-spacing:
     - 2
-    - before
+    -
+      before: true
+      after: false
+
+  # Disallow modifying variables of class declarations.
+  no-class-assign: 2
+
+  # Disallow modifying variables that are declared using const.
+  no-const-assign: 2
+
+  # Disallow to use this/super before super() calling in constructors.
+  no-this-before-super: 2
+
+  # Requires using let or const instead of var.
+  # This should be turned on when browser support is better.
+  no-var: 0
+
+  # Require method and property shorthand syntax for object literals.
+  object-shorthand:
+    - 0
+    - always
+
+  # Suggest using of const declaration for variables that are never modified.
+  prefer-const: 1
+
+  # Suggest using the spread operator instead of .apply().
+  # Should not be enabled in ES3/5 environments.
+  prefer-spread: 0
+
+  # Suggest using Reflect methods where applicable.
+  # Should not be enabled in ES3/5 environments.
+  prefer-reflect: 0
+
+  # Disallow generator functions that do not have yield.
+  require-yield: 1
 
 
   # Rules for LEGACY SUPPORT.
