@@ -64,7 +64,7 @@ if (isLocal) {
       log.error(err);
       process.exit(1);
     }
-    validate(tunnel.url, function() {
+    validate(tunnel.url + url.parse( uri ).pathname, function() {
       tunnel.close();
     });
   });
