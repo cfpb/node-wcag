@@ -1,10 +1,13 @@
 All notable changes to this project will be documented in this file.
 We follow the [Semantic Versioning 2.0.0](http://semver.org/) format.
 
-## 0.2.1 - 2015-09-17
+## 0.2.1 - 2015-09-23
 
 ### Fixed
 - Added support for paths when checking URLs locally.
+
+
+## 0.2.1 - 2015-09-17
 
 
 ## 0.2.0 - 2015-09-16
