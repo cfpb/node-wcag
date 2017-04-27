@@ -96,7 +96,7 @@ function validate(opts, cb) {
     return cb(new Error(msg));
   }
   opts = {
-    uri: 'http://achecker.ca/checkacc.php',
+    uri: 'https://achecker.ca/checkacc.php',
     qs: {
       uri: protocolify(opts.uri),
       id: opts.id,
